@@ -1,8 +1,10 @@
 package br.unb.cic.lp.gol;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
+import br.unb.cic.lp.rules.GameRule;
+import br.unb.cic.lp.states.*;
 
 /**
  * Representa um ambiente (environment) do jogo GameOfLife.
@@ -69,96 +71,74 @@ public class GameEngine implements CellListener {
 	 * c) em todos os outros casos a celula morre ou continua morta.
 	 */
 	public void nextGeneration() {
-		List<Cell> mustRevive = new ArrayList<Cell>();
-		List<Cell> mustKill = new ArrayList<Cell>();
+		HashMap<Cell, CellState> mustChange = new HashMap<Cell, CellState>();
+		CellState state;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (gameRule.shouldRevive(numberOfNeighborhoodAliveCells(i, j), cells[i][j].isAlive())) {
-					mustRevive.add(cells[i][j]);
-				} 
-				else if ((!gameRule.shouldKeepAlive(numberOfNeighborhoodAliveCells(i, j), cells[i][j].isAlive())) && cells[i][j].isAlive()) {
-					mustKill.add(cells[i][j]);
+				state = gameRule.shouldChange(numberOfNeighborhoodAliveCells(i, j), cells[i][j].getState());
+				if(!(state == cells[i][j].getState())){
+					mustChange.put(cells[i][j], state);
 				}
 			}
 		}
 		
-		for (Cell cell : mustRevive) {
-			cell.revive();
+		for (Cell cell : mustChange.keySet()){
+			cell.setState(mustChange.get(cell));
+			//TODO: Descobrir se foi morta e revivida para as estat’sticas
 		}
 		
-		for (Cell cell : mustKill) {
-			cell.kill();
-		}
-	}
-	
-	/**
-	 * Torna a celula de posicao (i, j) viva
-	 * 
-	 * @param i posicao vertical da celula
-	 * @param j posicao horizontal da celula
-	 * 
-	 * @throws InvalidParameterException caso a posicao (i, j) nao seja valida.
-	 */
-	public void makeCellAlive(int i, int j) throws InvalidParameterException {
-		if(validPosition(i, j)) {
-			cells[i][j].revive();
-		}
-		else {
-			new InvalidParameterException("Invalid position (" + i + ", " + j + ")" );
-		}
-	}
-	
-	/**
-	 * Verifica se uma celula na posicao (i, j) estah viva.
-	 * 
-	 * @param i Posicao vertical da celula
-	 * @param j Posicao horizontal da celula
-	 * @return Verdadeiro caso a celula de posicao (i,j) esteja viva.
-	 * 
-	 * @throws InvalidParameterException caso a posicao (i,j) nao seja valida. 
-	 */
-	public boolean isCellAlive(int i, int j) throws InvalidParameterException {
-		if(validPosition(i, j)) {
-			return cells[i][j].isAlive();
-		}
-		else {
-			throw new InvalidParameterException("Invalid position (" + i + ", " + j + ")" );
-		}
-	}
-
-	/**
-	 * Retorna o numero de celulas vivas no ambiente. 
-	 * Esse metodo eh particularmente util para o calculo de 
-	 * estatisticas e para melhorar a testabilidade.
-	 * 
-	 * @return  numero de celulas vivas.
-	 */
-	public int numberOfAliveCells() {
-		int aliveCells = 0;
-		for(int i = 0; i < height; i++) {
-			for(int j = 0; j < width; j++) {
-				if(isCellAlive(i,j)) {
-					aliveCells++;
-				}
-			}
-		}
-		return aliveCells;
 	}
 
 	/*
 	 * Computa o numero de celulas vizinhas vivas, dada uma posicao no ambiente
 	 * de referencia identificada pelos argumentos (i,j).
+	 * 
+	 * ALTERA‚ÌO: Retorna um HashMap com os estados existentes e sua respectiva contagem
 	 */
-	private int numberOfNeighborhoodAliveCells(int i, int j) {
-		int alive = 0;
+	private HashMap<CellState, Integer> numberOfNeighborhoodAliveCells(int i, int j) {
+		HashMap<CellState, Integer> dictStates = new HashMap<CellState, Integer>();
+		boolean passou;
 		for (int a = i - 1; a <= i + 1; a++) {
 			for (int b = j - 1; b <= j + 1; b++) {
-				if (validPosition(a, b)  && (!(a==i && b == j)) && cells[a][b].isAlive()) {
-					alive++;
+				if (validPosition(a, b)  && (!(a==i && b == j))) {
+					CellState state = cells[a][b].getState();
+					if (dictStates.keySet().size() == 0){
+						dictStates.put(state, 1);
+					}else{
+						passou = false;
+						for(CellState cellState : dictStates.keySet()){
+							if(cellState.getCellStateName() == state.getCellStateName()){
+								dictStates.put(cellState, dictStates.get(cellState) + 1);
+								passou = true;
+								break;
+							}
+						}
+						if(!passou){
+							dictStates.put(state, 1);
+						}
+					}
 				}
-			}
+			}	
 		}
-		return alive;
+		return dictStates;
+	}
+	
+	/*
+	 * Altera o estado de uma cŽlula.
+	 */
+	public void changeCell(int i, int j, CellState state){
+		if(i < width && j < height){
+			cells[i][j].setState(state);
+		}else{
+			throw new InvalidParameterException("Invalid position (" + i + ", " + j + ")");
+		}
+	}
+	
+	/*
+	 * Retorna o estado da celula (i,j)
+	 */
+	CellState getCellState(int i, int j){
+		return cells[i][j].getState();
 	}
 
 	/*

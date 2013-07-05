@@ -1,6 +1,10 @@
 package br.unb.cic.lp.gol;
 
+import java.util.HashMap;
 import java.util.Scanner;
+
+import br.unb.cic.lp.rules.*;
+import br.unb.cic.lp.states.*;
 
 /**
  * Atua como um componente de apresentacao (view), exibindo o estado atual do
@@ -10,8 +14,6 @@ import java.util.Scanner;
  */
 public class GameView {
 	private static final String LINE = "+-----+";
-	private static final String DEAD_CELL = "|     |";
-	private static final String ALIVE_CELL = "|  o  |";
 	
 	private static final int INVALID_OPTION = 0;
 	private static final int MAKE_CELL_ALIVE = 1;
@@ -20,13 +22,15 @@ public class GameView {
 
 	private GameEngine engine;
 	private GameController controller;
+	private GameRule rule;
 
 	/**
 	 * Construtor da classe GameBoard
 	 */
-	public GameView(GameController controller, GameEngine engine) {
+	public GameView(GameController controller, GameEngine engine, GameRule rule) {
 		this.controller = controller;
 		this.engine = engine;
+		this.rule = rule;
 	}
 
 	/**
@@ -38,7 +42,7 @@ public class GameView {
 		printLine();
 		for (int i = 0; i < engine.getHeight(); i++) {
 			for (int j = 0; j < engine.getWidth(); j++) {
-				System.out.print(engine.isCellAlive(i, j) ? ALIVE_CELL : DEAD_CELL);
+				System.out.print(engine.getCellState(i, j).getCellText());
 			}
 			System.out.println("   " + i);
 			printLine();
@@ -70,7 +74,8 @@ public class GameView {
 	}
 	
 	private void makeCellAlive() {
-		int i, j = 0;
+		int i, j = 0, option = 0, contador = 0;
+		CellState state;
 		Scanner s = new Scanner(System.in);
 		
 		do {
@@ -81,9 +86,25 @@ public class GameView {
 			System.out.print("\n Inform the column number (0 - " + engine.getWidth() + "): " );
 			
 			j = s.nextInt();
+
 		}while(!validPosition(i,j));
+		HashMap<Integer, CellState> options = rule.getOptions();
+		if(options != null){
+			do {
+				System.out.print("\n Inform the cell state {");
+				for (Integer c : options.keySet()){
+					contador++;
+					System.out.print("\n\t" + c + " - " + options.get(c).getName());
+				}
+				System.out.print("\n} (0 - " + contador + "):");
+				option = s.nextInt();
+			}while(option < 0 || option > contador);
+			state = options.get(option);
+		}else{
+			state = new CellState_Alive();
+		}
 		
-		controller.makeCellAlive(i, j);
+		controller.changeCell(i, j, state);
 	}
 	
 	private void nextGeneration() {
@@ -92,7 +113,7 @@ public class GameView {
 	
 	private void halt() {
 		System.out.println("\n \n");
-		displayStatistics();
+		//displayStatistics();
 		controller.halt();
 	}
 	

@@ -2,6 +2,8 @@ package br.unb.cic.lp.gol;
 
 import java.security.InvalidParameterException;
 
+import br.unb.cic.lp.states.*;
+
 /**
  * Classe que atua como um controlador do 
  * padr‹o MVC, separando os componentes da 
@@ -38,9 +40,9 @@ public class GameController {
 		System.exit(0);
 	}
 	
-	public void makeCellAlive(int i, int j) {
+	public void changeCell(int i, int j, CellState state) {
 		try {
-			engine.makeCellAlive(i, j);
+			engine.changeCell(i, j, state);
 			board.update();
 		}
 		catch(InvalidParameterException e) {

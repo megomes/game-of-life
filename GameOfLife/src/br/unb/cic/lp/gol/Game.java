@@ -1,5 +1,7 @@
 package br.unb.cic.lp.gol;
 
+import br.unb.cic.lp.rules.*;
+
 /**
  * Classe Game implementa o Padrão Façade, tornando a criação
  * de um Game mais fácil de ser utilizada.
@@ -19,10 +21,11 @@ public class Game {
 		controller = new GameController();
 		
 		GameRule gameRule = new GameRule_Standard(); //Jogo com as regras Padrões
+		//GameRule gameRule = new GameRule_HighLife(); //Jogo com as regras do HighLife
 		
 		GameEngine engine = new GameEngine(height, width, gameRule);	
 		
-		GameView board = new GameView(controller, engine);
+		GameView board = new GameView(controller, engine, gameRule);
 		
 		controller.setBoard(board);
 		controller.setEngine(engine);
