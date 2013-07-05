@@ -15,22 +15,15 @@ public class Cell {
 	public CellState getState() {
 		return actualState;
 	}
-
-	public void kill() {
-		actualState = new CellState_Dead();
-		
-		CellEvent evento = new CellEvent(this);
-		for (CellListener listener : cellListeners){
-			listener.cellKilled(evento);
-		}
-	}
-	
 	public void setState(CellState state) {
-		actualState = state;
-		
-		CellEvent evento = new CellEvent(this);
-		for (CellListener listener : cellListeners){
-			listener.cellRevived(evento);
+		if(state.getCellStateName() != actualState.getCellStateName()){
+			CellState oldState = actualState;
+			actualState = state;
+			
+			CellEvent evento = new CellEvent(this);
+			for (CellListener listener : cellListeners){
+				listener.cellChanged(evento, actualState, oldState);
+			}
 		}
 	}
 	

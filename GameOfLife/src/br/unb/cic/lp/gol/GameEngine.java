@@ -18,16 +18,12 @@ import br.unb.cic.lp.states.*;
  * 
  * @author rbonifacio
  */
-public class GameEngine implements CellListener {
+public class GameEngine{
 	private int height;
 	private int width;
 	private Cell[][] cells;
-	/**
-	 * Nota: [Falha 1] A classe Statistics foi mesclada em parte com essa classe.
-	 * O controle da estatística agora é parte responsável do Model
-	 */
-	private int revivedCells;
-	private int killedCells;
+	private Statistics statistics;
+	
 	/* Implementação do TemplateMethod/Strategy */
 	private GameRule gameRule;
 
@@ -44,31 +40,20 @@ public class GameEngine implements CellListener {
 		this.width = width;
 		
 		this.gameRule = gameRule;
+		statistics = new Statistics();
 
 		cells = new Cell[height][width];
 
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				cells[i][j] = new Cell();
-				cells[i][j].addCellListener(this);
+				cells[i][j].addCellListener(statistics);
 			}
 		}
-		
-		revivedCells = 0;
-		killedCells = 0;
 	}
 
 	/**
-	 * Calcula uma nova geracao do ambiente. Essa implementacao utiliza o
-	 * algoritmo do Conway, ou seja:
-	 * 
-	 * a) uma celula morta com exatamente tres celulas vizinhas vivas se torna
-	 * uma celula viva.
-	 * 
-	 * b) uma celula viva com duas ou tres celulas vizinhas vivas permanece
-	 * viva.
-	 * 
-	 * c) em todos os outros casos a celula morre ou continua morta.
+	 * Calcula uma nova geracao do ambiente. Baseado na regra de negócio implementada em GameRule.
 	 */
 	public void nextGeneration() {
 		HashMap<Cell, CellState> mustChange = new HashMap<Cell, CellState>();
@@ -84,7 +69,6 @@ public class GameEngine implements CellListener {
 		
 		for (Cell cell : mustChange.keySet()){
 			cell.setState(mustChange.get(cell));
-			//TODO: Descobrir se foi morta e revivida para as estatísticas
 		}
 		
 	}
@@ -147,15 +131,6 @@ public class GameEngine implements CellListener {
 	private boolean validPosition(int a, int b) {
 		return a >= 0 && a < height && b >= 0 && b < width;
 	}
-	
-	/* Métodos de CellListener e implementação dos Métodos de Estatística */
-	
-	public void cellRevived(CellEvent e){
-		this.revivedCells++;
-	}
-	public void cellKilled(CellEvent e){
-		this.killedCells++;
-	}
 
 	/* Metodos de acesso as propriedades height e width */
 	
@@ -176,10 +151,14 @@ public class GameEngine implements CellListener {
 	}
 	
 	public int getRevivedCells() {
-		return revivedCells;
+		return statistics.getRevivedCells();
 	}
 	
 	public int getKilledCells() {
-		return killedCells;
+		return statistics.getKilledCells();
+	}
+	
+	public int getInfluencedCells(){
+		return statistics.getInfluencedCells();
 	}
 }

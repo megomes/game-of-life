@@ -8,7 +8,7 @@ import br.unb.cic.lp.states.*;
  * Se a célula estiver viva e 2/3 celulas vizinhas estiverem vivas, ela permanecerá viva.
  * Se ela estiver morta e 3 vizinhas estiverem vivas, ela renascerá.
  * 
- * Quando nascer, a célula irá adotar as características da maioridade de sua vizinhança.
+ * A célula irá adotar as características da maioridade de sua vizinhança.
  * A vida A[o] irá prevalecer diante a uma igualdade de valores.
  * 
  * @author Matheus Ervilha

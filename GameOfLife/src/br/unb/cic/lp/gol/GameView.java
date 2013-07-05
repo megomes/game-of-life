@@ -96,7 +96,7 @@ public class GameView {
 					contador++;
 					System.out.print("\n\t" + c + " - " + options.get(c).getName());
 				}
-				System.out.print("\n} (0 - " + contador + "):");
+				System.out.print("\n} (1 ~ " + contador + "):");
 				option = s.nextInt();
 			}while(option < 0 || option > contador);
 			state = options.get(option);
@@ -113,13 +113,13 @@ public class GameView {
 	
 	private void halt() {
 		System.out.println("\n \n");
-		//displayStatistics();
+		displayStatistics();
 		controller.halt();
 	}
 	
 	private boolean validPosition(int i, int j) {
-		System.out.println(i);
-		System.out.println(j);
+		//System.out.println(i);
+		//System.out.println(j);
 		return i >= 0 && i < engine.getHeight() && j >= 0 && j < engine.getWidth();
 	}
 
@@ -143,6 +143,7 @@ public class GameView {
 		System.out.println("=================================");
 		System.out.println("Revived cells: " + engine.getRevivedCells());
 		System.out.println("Killed cells: " + engine.getKilledCells());
+		if(engine.getInfluencedCells() != 0) System.out.println("Influenced cells: " + engine.getInfluencedCells());
 		System.out.println("=================================");
 	}
 
