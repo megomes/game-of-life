@@ -26,6 +26,8 @@ public class GameEngine implements CellListener {
 	 */
 	private int revivedCells;
 	private int killedCells;
+	/* Implementação do TemplateMethod/Strategy */
+	private GameRule gameRule;
 
 	/**
 	 * Construtor da classe Environment.
@@ -35,9 +37,11 @@ public class GameEngine implements CellListener {
 	 * @param width
 	 *            dimensao horizontal do ambiente
 	 */
-	public GameEngine(int height, int width) {
+	public GameEngine(int height, int width, GameRule gameRule) {
 		this.height = height;
 		this.width = width;
+		
+		this.gameRule = gameRule;
 
 		cells = new Cell[height][width];
 
@@ -69,10 +73,10 @@ public class GameEngine implements CellListener {
 		List<Cell> mustKill = new ArrayList<Cell>();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (shouldRevive(i, j)) {
+				if (gameRule.shouldRevive(numberOfNeighborhoodAliveCells(i, j), cells[i][j].isAlive())) {
 					mustRevive.add(cells[i][j]);
 				} 
-				else if ((!shouldKeepAlive(i, j)) && cells[i][j].isAlive()) {
+				else if ((!gameRule.shouldKeepAlive(numberOfNeighborhoodAliveCells(i, j), cells[i][j].isAlive())) && cells[i][j].isAlive()) {
 					mustKill.add(cells[i][j]);
 				}
 			}
@@ -139,18 +143,6 @@ public class GameEngine implements CellListener {
 			}
 		}
 		return aliveCells;
-	}
-
-	/* verifica se uma celula deve ser mantida viva */
-	private boolean shouldKeepAlive(int i, int j) {
-		return (cells[i][j].isAlive())
-				&& (numberOfNeighborhoodAliveCells(i, j) == 2 || numberOfNeighborhoodAliveCells(i, j) == 3);
-	}
-
-	/* verifica se uma celula deve (re)nascer */
-	private boolean shouldRevive(int i, int j) {
-		return (!cells[i][j].isAlive())
-				&& (numberOfNeighborhoodAliveCells(i, j) == 3);
 	}
 
 	/*
