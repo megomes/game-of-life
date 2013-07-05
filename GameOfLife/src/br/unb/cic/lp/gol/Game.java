@@ -20,8 +20,9 @@ public class Game {
 	public Game(int height, int width){
 		controller = new GameController();
 		
-		GameRule gameRule = new GameRule_Standard(); //Jogo com as regras Padr›es
+		//GameRule gameRule = new GameRule_Standard(); //Jogo com as regras Padr›es
 		//GameRule gameRule = new GameRule_HighLife(); //Jogo com as regras do HighLife
+		GameRule gameRule = new GameRule_ImigrationGame();
 		
 		GameEngine engine = new GameEngine(height, width, gameRule);	
 		
