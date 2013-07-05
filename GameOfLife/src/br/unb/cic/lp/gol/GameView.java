@@ -91,6 +91,8 @@ public class GameView {
 	}
 	
 	private void halt() {
+		System.out.println("\n \n");
+		displayStatistics();
 		controller.halt();
 	}
 	
@@ -111,6 +113,16 @@ public class GameView {
 			return HALT;
 		}
 		else return INVALID_OPTION;
+	}
+	
+	/* Imprime as estatísticas finais da aplicação */
+	public void displayStatistics() {
+		System.out.println("=================================");
+		System.out.println("           Statistics            ");
+		System.out.println("=================================");
+		System.out.println("Revived cells: " + engine.getRevivedCells());
+		System.out.println("Killed cells: " + engine.getKilledCells());
+		System.out.println("=================================");
 	}
 
 	/* Imprime uma linha usada como separador das linhas do tabuleiro */

@@ -20,7 +20,12 @@ public class GameEngine {
 	private int height;
 	private int width;
 	private Cell[][] cells;
-	private Statistics statistics;
+	/**
+	 * A classe Statistics foi mesclada em parte com essa classe.
+	 * O controle da estat’stica agora Ž parte respons‡vel do Model
+	 */
+	private int revivedCells;
+	private int killedCells;
 
 	/**
 	 * Construtor da classe Environment.
@@ -30,7 +35,7 @@ public class GameEngine {
 	 * @param width
 	 *            dimentsao horizontal do ambiente
 	 */
-	public GameEngine(int height, int width, Statistics statistics) {
+	public GameEngine(int height, int width) {
 		this.height = height;
 		this.width = width;
 
@@ -42,7 +47,8 @@ public class GameEngine {
 			}
 		}
 		
-		this.statistics = statistics;
+		revivedCells = 0;
+		killedCells = 0;
 	}
 
 	/**
@@ -73,12 +79,12 @@ public class GameEngine {
 		
 		for (Cell cell : mustRevive) {
 			cell.revive();
-			statistics.recordRevive();
+			recordRevive();
 		}
 		
 		for (Cell cell : mustKill) {
 			cell.kill();
-			statistics.recordKill();
+			recordKill();
 		}
 	}
 	
@@ -93,7 +99,7 @@ public class GameEngine {
 	public void makeCellAlive(int i, int j) throws InvalidParameterException {
 		if(validPosition(i, j)) {
 			cells[i][j].revive();
-			statistics.recordRevive();
+			recordRevive();
 		}
 		else {
 			new InvalidParameterException("Invalid position (" + i + ", " + j + ")" );
@@ -171,7 +177,17 @@ public class GameEngine {
 	private boolean validPosition(int a, int b) {
 		return a >= 0 && a < height && b >= 0 && b < width;
 	}
+	
+	/* Metodos de Estat’stica */
+	
+	private void recordRevive() {
+		this.revivedCells++;
+	}
 
+	private void recordKill() {
+		this.killedCells++;
+	}
+	
 	/* Metodos de acesso as propriedades height e width */
 	
 	public int getHeight() {
@@ -188,5 +204,13 @@ public class GameEngine {
 
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public int getRevivedCells() {
+		return revivedCells;
+	}
+	
+	public int getKilledCells() {
+		return killedCells;
 	}
 }
