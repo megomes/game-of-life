@@ -21,7 +21,7 @@ public class GameEngine {
 	private int width;
 	private Cell[][] cells;
 	/**
-	 * A classe Statistics foi mesclada em parte com essa classe.
+	 * Nota: [Falha 1] A classe Statistics foi mesclada em parte com essa classe.
 	 * O controle da estat’stica agora Ž parte respons‡vel do Model
 	 */
 	private int revivedCells;
@@ -33,7 +33,7 @@ public class GameEngine {
 	 * @param height
 	 *            dimensao vertical do ambiente
 	 * @param width
-	 *            dimentsao horizontal do ambiente
+	 *            dimensao horizontal do ambiente
 	 */
 	public GameEngine(int height, int width) {
 		this.height = height;

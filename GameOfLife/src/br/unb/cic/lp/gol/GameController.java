@@ -35,7 +35,7 @@ public class GameController {
 	}
 	
 	public void halt() {
-			System.exit(0);
+		System.exit(0);
 	}
 	
 	public void makeCellAlive(int i, int j) {
