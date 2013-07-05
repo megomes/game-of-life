@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * @author rbonifacio
  */
-public class GameEngine {
+public class GameEngine implements CellListener {
 	private int height;
 	private int width;
 	private Cell[][] cells;
@@ -44,6 +44,7 @@ public class GameEngine {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				cells[i][j] = new Cell();
+				cells[i][j].addCellListener(this);
 			}
 		}
 		
@@ -79,12 +80,10 @@ public class GameEngine {
 		
 		for (Cell cell : mustRevive) {
 			cell.revive();
-			recordRevive();
 		}
 		
 		for (Cell cell : mustKill) {
 			cell.kill();
-			recordKill();
 		}
 	}
 	
@@ -99,7 +98,6 @@ public class GameEngine {
 	public void makeCellAlive(int i, int j) throws InvalidParameterException {
 		if(validPosition(i, j)) {
 			cells[i][j].revive();
-			recordRevive();
 		}
 		else {
 			new InvalidParameterException("Invalid position (" + i + ", " + j + ")" );
@@ -178,16 +176,15 @@ public class GameEngine {
 		return a >= 0 && a < height && b >= 0 && b < width;
 	}
 	
-	/* Metodos de Estat’stica */
+	/* MŽtodos de CellListener e implementa‹o dos MŽtodos de Estat’stica */
 	
-	private void recordRevive() {
+	public void cellRevived(CellEvent e){
 		this.revivedCells++;
 	}
-
-	private void recordKill() {
+	public void cellKilled(CellEvent e){
 		this.killedCells++;
 	}
-	
+
 	/* Metodos de acesso as propriedades height e width */
 	
 	public int getHeight() {
