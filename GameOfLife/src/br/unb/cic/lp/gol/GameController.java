@@ -39,7 +39,10 @@ public class GameController {
 	public void halt() {
 		System.exit(0);
 	}
-	
+	public void undo(){
+		engine.restoreState();
+		board.update();
+	}
 	public void changeCell(int i, int j, CellState state) {
 		try {
 			engine.changeCell(i, j, state);

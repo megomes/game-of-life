@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 import br.unb.cic.lp.rules.GameRule;
+import br.unb.cic.lp.savedStates.Caretaker;
 import br.unb.cic.lp.states.*;
 
 /**
@@ -26,6 +27,7 @@ public class GameEngine{
 	
 	/* Implementação do TemplateMethod/Strategy */
 	private GameRule gameRule;
+	private Caretaker caretaker;
 
 	/**
 	 * Construtor da classe Environment.
@@ -38,9 +40,9 @@ public class GameEngine{
 	public GameEngine(int height, int width, GameRule gameRule) {
 		this.height = height;
 		this.width = width;
-		
 		this.gameRule = gameRule;
 		statistics = new Statistics();
+		caretaker = new Caretaker(width, height);
 
 		cells = new Cell[height][width];
 
@@ -50,6 +52,8 @@ public class GameEngine{
 				cells[i][j].addCellListener(statistics);
 			}
 		}
+		
+		caretaker.saveState(cells);
 	}
 
 	/**
@@ -70,7 +74,7 @@ public class GameEngine{
 		for (Cell cell : mustChange.keySet()){
 			cell.setState(mustChange.get(cell));
 		}
-		
+		caretaker.saveState(cells);
 	}
 
 	/*
@@ -116,6 +120,7 @@ public class GameEngine{
 		}else{
 			throw new InvalidParameterException("Invalid position (" + i + ", " + j + ")");
 		}
+		caretaker.saveState(cells);
 	}
 	
 	/*
@@ -124,7 +129,17 @@ public class GameEngine{
 	CellState getCellState(int i, int j){
 		return cells[i][j].getState();
 	}
-
+	
+	/*
+	 * Funções para UNDO
+	 */
+	public void restoreState(){
+		cells = caretaker.restoreState(cells);
+	}
+	public boolean canRestoreState(){
+		return caretaker.canRestoreState();
+	}
+	
 	/*
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
