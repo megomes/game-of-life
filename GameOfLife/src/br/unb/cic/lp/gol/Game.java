@@ -16,6 +16,8 @@ public class Game {
 	 * Construtor do Game
 	 * @param height Altura do tabuleiro
 	 * @param width Largura do tabuleiro
+	 * 
+	 * TODO: Colocar a regra do jogo como par‰metro tbm.
 	 */
 	public Game(int height, int width){
 		controller = new GameController();

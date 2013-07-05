@@ -128,12 +128,11 @@ public class GameEngine{
 	/*
 	 * Verifica se uma posicao (a, b) referencia uma celula valida no tabuleiro.
 	 */
-	private boolean validPosition(int a, int b) {
+	public boolean validPosition(int a, int b) {
 		return a >= 0 && a < height && b >= 0 && b < width;
 	}
 
 	/* Metodos de acesso as propriedades height e width */
-	
 	public int getHeight() {
 		return height;
 	}
@@ -150,6 +149,7 @@ public class GameEngine{
 		this.width = width;
 	}
 	
+	/* MŽtodo de Acesso as Estat’sticas */
 	public int getRevivedCells() {
 		return statistics.getRevivedCells();
 	}

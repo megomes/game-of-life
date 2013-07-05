@@ -88,6 +88,7 @@ public class GameView {
 			j = s.nextInt();
 
 		}while(!validPosition(i,j));
+		// Se existir mais de um modelo de célula viva
 		HashMap<Integer, CellState> options = rule.getOptions();
 		if(options != null){
 			do {
@@ -118,9 +119,7 @@ public class GameView {
 	}
 	
 	private boolean validPosition(int i, int j) {
-		//System.out.println(i);
-		//System.out.println(j);
-		return i >= 0 && i < engine.getHeight() && j >= 0 && j < engine.getWidth();
+		return engine.validPosition(i, j);
 	}
 
 	private int parseOption(String option) {
