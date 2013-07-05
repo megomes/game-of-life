@@ -1,6 +1,6 @@
 package br.unb.cic.lp.gol;
 
-public class GameRuleHighLife extends GameRule{
+public class GameRule_HighLife extends GameRule{
 	public boolean shouldKeepAlive(int numberOfNeighborhoodAliveCells, boolean alive) {
 		return alive && (numberOfNeighborhoodAliveCells == 2 || numberOfNeighborhoodAliveCells == 3);
 	}

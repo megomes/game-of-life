@@ -18,7 +18,7 @@ public class Game {
 	public Game(int height, int width){
 		controller = new GameController();
 		
-		GameRule gameRule = new GameRuleStandard(); //Jogo com as regras Padr›es
+		GameRule gameRule = new GameRule_Standard(); //Jogo com as regras Padr›es
 		
 		GameEngine engine = new GameEngine(height, width, gameRule);	
 		
