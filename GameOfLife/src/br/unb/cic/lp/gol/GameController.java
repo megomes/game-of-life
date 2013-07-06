@@ -15,6 +15,11 @@ public class GameController {
 
 	private GameEngine engine;
 	private GameView board;
+	private GameViewWindow window = null;
+
+	public void setGameWindow(GameViewWindow window){
+		this.window = window;
+	}
 	
 	public GameEngine getEngine() {
 		return engine;
@@ -33,7 +38,7 @@ public class GameController {
 	}
 	
 	public void start() {
-		board.update();
+		reloadViews();
 	}
 	
 	public void halt() {
@@ -41,12 +46,12 @@ public class GameController {
 	}
 	public void undo(){
 		engine.restoreState();
-		board.update();
+		reloadViews();
 	}
 	public void changeCell(int i, int j, CellState state) {
 		try {
 			engine.changeCell(i, j, state);
-			board.update();
+			reloadViews();
 		}
 		catch(InvalidParameterException e) {
 			System.out.println(e.getMessage());
@@ -55,7 +60,18 @@ public class GameController {
 	
 	public void nextGeneration() {
 		engine.nextGeneration();
-		board.update();
+		reloadViews();
+	}
+	
+	public void reloadViews(){
+		if (window != null){
+			window.reloadScreen();
+			board.update(false);
+		}else{
+			board.update(true);
+		}
+
+		
 	}
 	
 }

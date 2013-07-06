@@ -1,6 +1,8 @@
 package br.unb.cic.lp.rules;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import br.unb.cic.lp.states.*;
 /**
@@ -58,10 +60,10 @@ public class GameRule_ImigrationGame extends GameRule {
 		return new CellState_Dead();
 	}
 
-	public HashMap<Integer, CellState> getOptions() {
-		HashMap<Integer, CellState> options = new HashMap<Integer, CellState>();
-		options.put(1, new CellState_Alive());
-		options.put(2, new CellState_Alive_B());
+	public List<CellState> getOptions() {
+		List<CellState> options = new ArrayList<CellState>();
+		options.add(new CellState_Alive());
+		options.add(new CellState_Alive_B());
 
 		return options;
 	}

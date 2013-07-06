@@ -3,6 +3,7 @@ package br.unb.cic.lp.rules;
 import br.unb.cic.lp.states.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class GameRule {
 	public CellState shouldChange(HashMap<CellState, Integer> dictState, CellState actualState){
@@ -17,5 +18,5 @@ public abstract class GameRule {
 	protected abstract CellState shouldKeepAlive(HashMap<CellState, Integer> dictState);
 	protected abstract CellState shouldRevive(HashMap<CellState, Integer> dictState);
 	
-	public abstract HashMap<Integer, CellState> getOptions();
+	public abstract List<CellState> getOptions();
 }

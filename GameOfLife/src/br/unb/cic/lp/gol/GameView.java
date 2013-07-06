@@ -1,6 +1,7 @@
 package br.unb.cic.lp.gol;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import br.unb.cic.lp.rules.*;
@@ -38,7 +39,7 @@ public class GameView {
 	 * Atualiza o componente view (representado pela classe GameBoard),
 	 * possivelmente como uma resposta a uma atualização do jogo.
 	 */
-	public void update() {
+	public void update(boolean printOptions) {
 		printFirstRow();
 		printLine();
 		for (int i = 0; i < engine.getHeight(); i++) {
@@ -48,7 +49,7 @@ public class GameView {
 			System.out.println("   " + i);
 			printLine();
 		}
-		printOptions();
+		if (printOptions) printOptions();
 	}
 
 	private void printOptions() {
@@ -94,13 +95,13 @@ public class GameView {
 
 		}while(!validPosition(i,j));
 		// Se existir mais de um modelo de célula viva
-		HashMap<Integer, CellState> options = rule.getOptions();
+		List<CellState> options = rule.getOptions();
 		if(options != null){
 			do {
 				System.out.print("\n Inform the cell state {");
-				for (Integer c : options.keySet()){
+				for (CellState cellState : options){
 					contador++;
-					System.out.print("\n\t[" + c + "] - " + options.get(c).getName());
+					System.out.print("\n\t[" + contador + "] - " + cellState.getName());
 				}
 				System.out.print("\n} (1 ~ " + contador + "):");
 				option = s.nextInt();

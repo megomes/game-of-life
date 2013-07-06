@@ -32,6 +32,9 @@ public class Game {
 		
 		controller.setBoard(board);
 		controller.setEngine(engine);
+		
+		GameViewWindow window = new GameViewWindow(600,600, engine, controller, gameRule);
+		controller.setGameWindow(window);
 	}
 	
 	/* Inicia todo o processo do jogo */

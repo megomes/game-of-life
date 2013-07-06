@@ -1,6 +1,7 @@
 package br.unb.cic.lp.rules;
 
 import java.util.HashMap;
+import java.util.List;
 
 import br.unb.cic.lp.states.*;
 /**
@@ -45,7 +46,7 @@ public class GameRule_HighLife extends GameRule{
 	 * Retorna um HashMap contendo o ID da opção e a opção de VIDA existente na Regra.
 	 * Como a regra HighLife apenas contem um modo de VIDA, retornamos NULL 
 	 */
-	public HashMap<Integer, CellState> getOptions(){
+	public List<CellState> getOptions(){
 		return null;
 	}
 }
