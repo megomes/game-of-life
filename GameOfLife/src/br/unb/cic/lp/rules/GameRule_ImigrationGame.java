@@ -67,5 +67,13 @@ public class GameRule_ImigrationGame extends GameRule {
 
 		return options;
 	}
+	public HashMap<String,String> getImageOptions(){
+		HashMap<String, String> list = new HashMap<String,String>();
+		list.put(new CellState_Dead().getCellStateName(), new CellState_Dead().getCellImageName());
+		list.put(new CellState_Alive().getCellStateName(), new CellState_Alive().getCellImageName());
+		list.put(new CellState_Alive_B().getCellStateName(), new CellState_Alive_B().getCellImageName());
 
+		return list;
+
+	}
 }

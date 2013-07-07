@@ -1,5 +1,6 @@
 package br.unb.cic.lp.rules;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,5 +49,13 @@ public class GameRule_HighLife extends GameRule{
 	 */
 	public List<CellState> getOptions(){
 		return null;
+	}
+	public HashMap<String,String> getImageOptions(){
+		HashMap<String, String> list = new HashMap<String,String>();
+		list.put(new CellState_Dead().getCellStateName(), new CellState_Dead().getCellImageName());
+		list.put(new CellState_Alive().getCellStateName(), new CellState_Alive().getCellImageName());
+		
+		return list;
+
 	}
 }

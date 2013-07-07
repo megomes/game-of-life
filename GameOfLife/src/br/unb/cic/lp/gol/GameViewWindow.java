@@ -1,7 +1,11 @@
 package br.unb.cic.lp.gol;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.*;
@@ -21,7 +25,8 @@ public class GameViewWindow extends JFrame implements ActionListener{
 	private GameEngine engine;
 	private GameController controller;
 	private GameRule gameRule;
-	
+	private HashMap<String, String> images_src;
+	private List<Image> images;
 	/* Bot›es */
 	private JButton btnUndo;
 	
@@ -45,17 +50,23 @@ public class GameViewWindow extends JFrame implements ActionListener{
 		JPanel panel = new JPanel();
 	    getContentPane().add(panel);
 	    panel.setLayout(null);
+	    /* Load Images */
+	    
+	    images_src = gameRule.getImageOptions();
+	    images = new ArrayList<Image>();
+	    for(String src : images_src.keySet()){
+	    	images.add(new ImageIcon(getClass().getResource(images_src.get(src))).getImage());
+	    }
 	       
 		/* Botoes */
 	    buttons = new MButton[engine.getHeight()][engine.getWidth()];
-	    //ImageIcon icone = new ImageIcon("/GameOfLife/resources/cell_alive_a.png");
 		for(int i = 0; i < engine.getHeight(); i++){
 			for(int j = 0; j < engine.getWidth(); j++){
 				buttons[i][j] = new MButton(i,j);
-				//buttons[i][j].setIcon(icone);
-				buttons[i][j].setText(engine.getCellState(i, j).getCellImageName());
 				buttons[i][j].setBounds(j * tamX + BORDER, i * tamY + BORDER, tamX, tamY);
+				buttons[i][j].setBackgroundImage(getLoadedImage("dead"));
 				buttons[i][j].addActionListener(this);
+				buttons[i][j].setBorder(BorderFactory.createEmptyBorder());
 				panel.add(buttons[i][j]);
 			}
 		}
@@ -90,14 +101,31 @@ public class GameViewWindow extends JFrame implements ActionListener{
 		return button;
 	}
 	
+	private Image getLoadedImage(String stateName){
+		int contador = 0;
+		for(String src : images_src.keySet()){
+			if (src == stateName){
+				return images.get(contador);
+			}else{
+				contador++;
+			}
+		}
+		return null;
+	}
+	
 	public void reloadScreen(){
 		btnUndo.setEnabled(engine.canRestoreState());
+
 		for(int i = 0; i < engine.getHeight(); i++){
 			for(int j = 0; j < engine.getWidth(); j++){
-				buttons[i][j].setText(engine.getCellState(i, j).getCellImageName());
+				
+				buttons[i][j].setBackgroundImage(getLoadedImage(engine.getCellState(i, j).getCellStateName()));
+
 			}
 		}
 	}
+	
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {		

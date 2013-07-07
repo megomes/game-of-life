@@ -4,7 +4,7 @@ public class CellState_Alive_B  extends CellState{
 	public CellState_Alive_B(){
 		CellText = "|  x  |";
 		CellStateName = "alive_b";
-		CellImageName = "X";
+		CellImageName = "cell_alive_b.png";
 	}
 	public String getName(){
 		return "Alive Cell B [x]";
