@@ -14,7 +14,11 @@ import javax.swing.JPanel;
 import br.unb.cic.lp.rules.GameRule;
 import br.unb.cic.lp.states.*;
 
-
+/**
+ * Essa classe atua como o controle da View na Janela Java Swing
+ * Caso a grade seja 3D, essa janela será criada
+ * 
+ */
 @SuppressWarnings("serial")
 public class GameViewWindow3D extends GameWindow implements ActionListener{
 	private static final int BORDER = 20;
@@ -37,6 +41,14 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 	/* Labels */
 	private JLabel lblx, lbly, lblz;
 	
+	/**
+	 * construtor da janela
+	 * @param width largura a janela em px
+	 * @param height altura da janela em px
+	 * @param gameEngine gameEngine utilizada
+	 * @param gameController gameController utilizado
+	 * @param gameRule gameRule utilizado
+	 */
 	public GameViewWindow3D(int width, int height, GameEngine gameEngine, GameController gameController, GameRule gameRule){
 		this.height = height;
 		this.width = width;
@@ -46,6 +58,10 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		configWindow();
 	}
 	
+	/**
+	 * Configuração inicial da janela
+	 * Cria panel, guarda as opções de Estados existentes, Print inicial
+	 */
 	private void configWindow(){
 		options = gameRule.getOptions();
 
@@ -75,6 +91,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		
 		setVisible(true);
 	}
+	
+	/* Imprime a grid do jogo */
 	private void printGrid(){
 		int pontaPrimeiroX = width/2 - 25;
 		int pontaPrimeiroY = height/2 - 28;
@@ -91,6 +109,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 			}
 		}
 	}
+	
+	/* Imprime o menu do jogo */
 	private void printMenu(){
 		/* Botoes */
 		addNextButton();
@@ -159,6 +179,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		}
 		
 	}
+	/* Imprime as células vivas do jogo */
 	private void printCells(){
 		int pontaPrimeiroX = width/2 - 25;
 		int pontaPrimeiroY = height/2 - 28;
@@ -177,6 +198,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 			}
 		}
 	}
+	
+	/* Adiciona o botão randômico na tela */
 	public JButton addRandomButton(){
 		JButton button = new JButton("Random");
 		button.addActionListener(new ActionListener() {
@@ -207,6 +230,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		panel.add(button);
 		return button;
 	}
+	
+	/* Adiciona o botão Next Generation na tela */
 	public JButton addNextButton(){
 		JButton button = new JButton("Next generation");
 		button.addActionListener(new ActionListener() {
@@ -220,6 +245,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		return button;
 	}
 	
+	/* Adiciona o botão Undo na tela */
 	public JButton addUndoButton(){
 		JButton button = new JButton("Undo changes");
 		button.addActionListener(new ActionListener() {
@@ -233,6 +259,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		return button;
 	}
 	
+	/* Event Listener dos Botões de criar uma nova célula */
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 		if(e.getSource() instanceof MButton){
@@ -267,6 +294,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		}
 	}
 
+	/* Apaga toda a tela, imprime as células existentes, imprime a grade e imprime o menu */
 	@Override
 	public void reloadScreen() {
 		panel.removeAll();

@@ -6,6 +6,15 @@ import java.util.List;
 
 import br.unb.cic.lp.states.*;
 
+/**
+ * Classe genérica de uma regra. Feita para que o usuário posso criar a própria regra,
+ * fora das padrões.
+ * Regras do tipo: Se x/y células vizinhas estiverem vivas, a célula continuará viva.
+ * Se z células vizinhas estiverem vivas, a célula irá revivar.
+ *
+ * O usuário também pode alterar quais são os tipos de células vivas
+ *
+ */
 public class GameRule_Generic extends GameRule{
 	
 	List<CellState_Alive> cellStates;

@@ -4,7 +4,12 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+/** 
+ * Botão MButton que extende da classe JButton.
+ * Esse botão tem posição i e j e uma função setBackgroundImage. Que já adiciona uma image
+ * de um tamanho compatível no botão. 
+ *
+ */
 public class MButton extends JButton {
 	private int i;
 	private int j;

@@ -1,5 +1,8 @@
 package br.unb.cic.lp.states;
-
+/**
+ * Implementação da uma célula viva.
+ *
+ */
 public class CellState_Alive_B  extends CellState_Alive{
 	public CellState_Alive_B(){
 		CellText = "|  x  |";

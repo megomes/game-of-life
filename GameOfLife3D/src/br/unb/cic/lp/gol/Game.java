@@ -17,8 +17,9 @@ public class Game {
 	 * Construtor do Game
 	 * @param height Altura do tabuleiro
 	 * @param width Largura do tabuleiro
+	 * @param depth Profundidade do tabuleiro (3D)
+	 * @param gameRule Regra do jogo
 	 * 
-	 * TODO: Colocar a regra do jogo como parâmetro tbm.
 	 */
 	public Game(int height, int width, int depth, GameRule gameRule){
 		controller = new GameController();
@@ -39,6 +40,7 @@ public class Game {
 		
 		controller.setGameWindow(window);
 	}
+	/* Criação secundária. De um game 2D */
 	public Game(int height, int width, GameRule gameRule){
 		this(height, width, 1, gameRule);
 	}

@@ -1,5 +1,8 @@
 package br.unb.cic.lp.states;
-
+/**
+ * Implementação da uma célula morta.
+ *
+ */
 public class CellState_Dead extends CellState{
 	public CellState_Dead(){
 		CellText = "|     |";

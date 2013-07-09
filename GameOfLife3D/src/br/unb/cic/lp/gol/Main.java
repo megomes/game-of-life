@@ -2,7 +2,10 @@ package br.unb.cic.lp.gol;
 
 import br.unb.cic.lp.rules.*;
 import br.unb.cic.lp.states.*;
-
+/**
+ * Main da aplicação.
+ *
+ */
 public class Main {
 
 	public static void main(String args[]) {

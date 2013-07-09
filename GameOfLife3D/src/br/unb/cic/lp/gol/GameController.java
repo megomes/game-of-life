@@ -48,6 +48,18 @@ public class GameController {
 		engine.restoreState();
 		reloadViews();
 	}
+	
+	/**
+	 * Altera uma célula no Model (GameEngine.java)
+	 * 
+	 * @param i x
+	 * @param j y
+	 * @param k z
+	 * @param state estado
+	 * @param reload deve fazer um reload da tela?
+	 * 
+	 * Se não for uma posição válida, o usuário irá receber uma mensagem no console.
+	 */
 	public void changeCell(int i, int j, int k, CellState state, boolean reload) {
 		try {
 			engine.changeCell(i, j, k, state);
@@ -58,6 +70,9 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * Executa as regras para a próxima geração
+	 */
 	public void nextGeneration() {
 		engine.nextGeneration();
 		reloadViews();

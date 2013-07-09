@@ -4,7 +4,11 @@ import br.unb.cic.lp.states.*;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Classe abstrata de uma regra.
+ * Contém todas as funções obrigatórias de uma regra.
+ *
+ */
 public abstract class GameRule {
 	public CellState shouldChange(HashMap<CellState, Integer> dictState, CellState actualState, int depth){
 		CellState state;

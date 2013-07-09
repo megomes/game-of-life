@@ -1,7 +1,10 @@
 package br.unb.cic.lp.savedStates;
 
 import br.unb.cic.lp.states.*;
-
+/**
+ * Memento. Salva o estado de uma célula
+ *
+ */
 public class Memento {
 	private CellState cellState;
 	

@@ -4,10 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unb.cic.lp.gol.Cell;
-
+/**
+ * Classe controle da arquitetura Memento.
+ * Controla os estados dispon’veis para serem recuperados.
+ *
+ */
 public class Caretaker {
 	private List<Memento[][][]> savedStates;
 	private int width, height, depth;
+	
+	/**
+	 * Construtor da classe
+	 * @param width largura do tabuleiro
+	 * @param height altura do tabuleiro
+	 * @param depth profundidade do tabuleiro
+	 */
 	public Caretaker(int width, int height, int depth){
 		savedStates = new ArrayList<Memento[][][]>();
 		this.width = width;
@@ -15,6 +26,7 @@ public class Caretaker {
 		this.depth = depth;
 	}
 	
+	/* Salva um estado */
 	public void saveState(Cell[][][] cells){
 		if (savedStates.size() == 6){
 			savedStates.remove(0);
@@ -30,6 +42,7 @@ public class Caretaker {
 		savedStates.add(memento);
 	}
 	
+	/* Recupera um estado */
 	public Cell[][][] restoreState(Cell[][][] cells){
 		Memento[][][] memento = savedStates.get(savedStates.size() - 2);
 		savedStates.remove(savedStates.size() - 1);
@@ -43,6 +56,7 @@ public class Caretaker {
 		return cells;
 	}
 	
+	/* Indica se Ž poss’vel restaurar um estado */
 	public boolean canRestoreState(){
 		return savedStates.size() > 1;
 	}

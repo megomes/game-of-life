@@ -1,5 +1,8 @@
 package br.unb.cic.lp.states;
-
+/**
+ * Classe abstrata do estado de uma célula.
+ *
+ */
 public abstract class CellState {
 	protected String CellText;
 	protected String CellStateName;

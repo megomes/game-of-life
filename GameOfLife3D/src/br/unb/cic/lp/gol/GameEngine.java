@@ -18,6 +18,9 @@ import br.unb.cic.lp.states.*;
  * altura (height) e comprimento (width).
  * 
  * @author rbonifacio
+ * 
+ * @modifications
+ * Agora o ambiente é representado como um array tridimensional.
  */
 public class GameEngine{
 	private int height;
@@ -33,10 +36,17 @@ public class GameEngine{
 	/**
 	 * Construtor da classe Environment.
 	 * 
+	 * Também cria uma instancia de Controle do padrão Memento. Necessária para
+	 * a função Undo do programa.
+	 * 
 	 * @param height
 	 *            dimensao vertical do ambiente
 	 * @param width
 	 *            dimensao horizontal do ambiente
+	 * @param depth
+	 * 			  dimensão de profundidade do ambiente
+	 * @param gameRule
+	 * 			  Regras do jogo
 	 */
 	public GameEngine(int height, int width, int depth, GameRule gameRule) {
 		this.height = height;
@@ -61,7 +71,11 @@ public class GameEngine{
 	}
 
 	/**
-	 * Calcula uma nova geracao do ambiente. Baseado na regra de negócio implementada em GameRule.
+	 * Calcula se é necessário a alteração de estado da célula.
+	 * Para isso, cria um HashMap com a contagem de cada tipo de célula em volta e
+	 * checa com o gameRule se é necessária a mudança e para qual estado será feita.
+	 * 
+	 * No final da geração, será salvo o estado para que seja recuperado em um segundo momento.
 	 */
 	public void nextGeneration() {
 		HashMap<Cell, CellState> mustChange = new HashMap<Cell, CellState>();
@@ -76,7 +90,6 @@ public class GameEngine{
 				}
 			}
 		}
-
 		
 		for (Cell cell : mustChange.keySet()){
 			cell.setState(mustChange.get(cell));
@@ -123,6 +136,7 @@ public class GameEngine{
 	
 	/*
 	 * Altera o estado de uma célula.
+	 * Salva o estado do ambiente.
 	 */
 	public void changeCell(int i, int j, int k, CellState state){
 		if(i < width && j < height && k < depth){
@@ -157,7 +171,7 @@ public class GameEngine{
 		return a >= 0 && a < height && b >= 0 && b < width && c >= 0 && c < depth;
 	}
 
-	/* Metodos de acesso as propriedades height e width */
+	/* Metodos de acesso as propriedades height, width e depth */
 	public int getHeight() {
 		return height;
 	}

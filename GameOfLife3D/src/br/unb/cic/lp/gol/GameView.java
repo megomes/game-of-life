@@ -55,6 +55,10 @@ public class GameView {
 		if (printOptions) printOptions();
 	}
 
+	/**
+	 * imprime as opções para o usuário. Caso exista uma janela Java Swing cadastrada no controller,
+	 * essa função não será executada.
+	 */
 	private void printOptions() {
 		Scanner s = new Scanner(System.in);
 		int option;
@@ -79,9 +83,12 @@ public class GameView {
 			case UNDO : undo();
 		}
 	}
+	/* Ctrl + z */
 	private void undo(){
 		controller.undo();
 	}
+	
+	/* Opção de fazer uma célula viva. Descobre sua posição e, caso necessário, seu novo estado. */
 	private void makeCellAlive() {
 		int i, j = 0, k = 0, option = 0, contador = 0;
 		CellState state;
@@ -125,20 +132,24 @@ public class GameView {
 		controller.changeCell(i, j, k, state, true);
 	}
 	
+	/* Opção para começar o processo de nova geração */
 	private void nextGeneration() {
 		controller.nextGeneration();
 	}
 	
+	/* Terminar aplicação e mostrar estatísticas */
 	private void halt() {
 		System.out.println("\n \n");
 		displayStatistics();
 		controller.halt();
 	}
 	
+	/* Calcula se é uma posição válida na grade do jogo */
 	private boolean validPosition(int i, int j, int k) {
 		return engine.validPosition(i, j, k);
 	}
 
+	/* Calcula se é uma opção válida escolhida no menu */
 	private int parseOption(String option) {
 		if(option.equals("1")) {
 			return MAKE_CELL_ALIVE;

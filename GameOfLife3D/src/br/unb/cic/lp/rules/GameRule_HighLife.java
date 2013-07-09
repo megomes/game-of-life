@@ -10,7 +10,6 @@ import br.unb.cic.lp.states.*;
  * Se a célula estiver viva e 2/3 celulas vizinhas estiverem vivas, ela permanecerá viva.
  * Se ela estiver morta e 3/6 vizinhas estiverem vivas, ela renascerá.
  * 
- * @author Matheus Ervilha
  *
  */
 public class GameRule_HighLife extends GameRule{

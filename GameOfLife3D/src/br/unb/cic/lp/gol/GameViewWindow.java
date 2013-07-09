@@ -14,9 +14,9 @@ import javax.swing.*;
 import br.unb.cic.lp.rules.*;
 import br.unb.cic.lp.states.*;
 /**
- * Essa classe atua como o controle da View na Janela JFrame
+ * Essa classe atua como o controle da View na Janela Java Swing
+ * Caso a grade seja 2D, essa janela será criada
  * 
- * @author Matheus Ervilha
  */
 public class GameViewWindow extends GameWindow implements ActionListener{
 	private static final int BORDER = 20;
@@ -31,6 +31,15 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 	/* Botões */
 	private JButton btnUndo;
 	
+	/**
+	 * Construtor da janela
+	 * 
+	 * @param width tamanho em px
+	 * @param height altura em px
+	 * @param gameEngine gameEngine utilizada
+	 * @param gameController gameController utilizado
+	 * @param gameRule regras implementadas
+	 */
 	public GameViewWindow(int width, int height, GameEngine gameEngine, GameController gameController, GameRule gameRule){
 		this.height = height;
 		this.width = width;
@@ -40,6 +49,12 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		configWindow();
 	}
 
+	/**
+	 *  Configuração inicial da janela 
+	 *	Criação das células (botões)
+	 * 	Criação do Menu
+	 * 	Load das imagens. Para que não seja necessário carregá-las sempre  
+	 */
 	private void configWindow(){
 		this.setSize(width,height + 20 + 50); //Tamanho da janela
 		this.setLocationRelativeTo(null); //Posicionado no centro
@@ -78,6 +93,11 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		
 		setVisible(true);
 	}
+	/**
+	 * Cria o botão de Next Generation
+	 * @param panel destino
+	 * @return botão criado
+	 */
 	public JButton addNextButton(JPanel panel){
 		JButton button = new JButton("Next generation");
 		button.addActionListener(new ActionListener() {
@@ -90,6 +110,11 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		panel.add(button);
 		return button;
 	}
+	/**
+	 * Criação do botão de Next Generation
+	 * @param panel destino
+	 * @return botão criado
+	 */
 	public JButton addRandomButton(JPanel panel){
 		JButton button = new JButton("Random");
 		button.addActionListener(new ActionListener() {
@@ -120,6 +145,16 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		panel.add(button);
 		return button;
 	}
+	
+	/**
+	 * Criação do Botão de Show off da aplicação
+	 * Esse botão só é criado em um tabuleiro 17x17 e cria células de estados
+	 * aleatórios em uma posição calculada para que fique em um Loop infinito
+	 * entre figuras
+	 * 
+	 * @param panel destino
+	 * @return botão criado
+	 */
 	public JButton addShowOffButton(JPanel panel){
 		JButton button = new JButton("Show Off");
 		button.addActionListener(new ActionListener() {
@@ -203,6 +238,12 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		panel.add(button);
 		return button;
 	}
+	
+	/**
+	 * Criação do botão de Undo
+	 * @param panel destino
+	 * @return botão criado (utilizado para desabilitar o botão, caso não exista estados anteriores
+	 */
 	public JButton addUndoButton(JPanel panel){
 		JButton button = new JButton("Undo changes");
 		button.addActionListener(new ActionListener() {
@@ -216,6 +257,7 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		return button;
 	}
 	
+	/* Retorna uma imagem que já tinha sido carregada */
 	private Image getLoadedImage(String stateName){
 		int contador = 0;
 		for(String src : images_src.keySet()){
@@ -228,6 +270,7 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		return null;
 	}
 	
+	/* Reload screen. Altera a imagem de todos os botões que foram alterados (Células) */
 	public void reloadScreen(){
 		btnUndo.setEnabled(engine.canRestoreState());
 
@@ -240,7 +283,7 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 	}
 	
 
-
+	/* Evento Listener do botão da célula. Troca o estado do botão(célula) clicado */
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 		if(e.getSource() instanceof MButton){

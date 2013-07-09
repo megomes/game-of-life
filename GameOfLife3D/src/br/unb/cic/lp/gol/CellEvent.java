@@ -3,9 +3,6 @@ package br.unb.cic.lp.gol;
 import java.util.EventObject;
 /**
  * Observer para eventos da CŽlula
- * 
- * @author Matheus Ervilha
- *
  */
 public class CellEvent extends EventObject{
 	/**

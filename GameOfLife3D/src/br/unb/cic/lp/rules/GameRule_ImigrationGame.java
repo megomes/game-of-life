@@ -13,7 +13,6 @@ import br.unb.cic.lp.states.*;
  * A célula irá adotar as características da maioridade de sua vizinhança.
  * A vida A[o] irá prevalecer diante a uma igualdade de valores.
  * 
- * @author Matheus Ervilha
  *
  */
 public class GameRule_ImigrationGame extends GameRule {
