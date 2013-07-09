@@ -21,7 +21,7 @@ public class Game {
 	 * @param gameRule Regra do jogo
 	 * 
 	 */
-	public Game(int height, int width, int depth, GameRule gameRule){
+	public Game(int height, int width, int depth, GameRule gameRule, boolean showWindow){
 		controller = new GameController();
 		
 		GameEngine engine = new GameEngine(height, width, depth, gameRule);	
@@ -30,19 +30,22 @@ public class Game {
 		
 		controller.setBoard(board);
 		controller.setEngine(engine);
-		
-		GameWindow window;
-		if (depth > 1){
-			window = new GameViewWindow3D(600, 600, engine, controller, gameRule);
-		}else{
-			window = new GameViewWindow(600, 600, engine, controller, gameRule);	
+		if(showWindow){
+			GameWindow window;
+			if (depth > 1){
+				window = new GameViewWindow3D(600, 600, engine, controller, gameRule);
+			}else{
+				window = new GameViewWindow(600, 600, engine, controller, gameRule);	
+			}
+			controller.setGameWindow(window);
+
 		}
+
 		
-		controller.setGameWindow(window);
 	}
 	/* Criação secundária. De um game 2D */
-	public Game(int height, int width, GameRule gameRule){
-		this(height, width, 1, gameRule);
+	public Game(int height, int width, GameRule gameRule, boolean showWindow){
+		this(height, width, 1, gameRule, showWindow);
 	}
 	
 	/* Inicia todo o processo do jogo */

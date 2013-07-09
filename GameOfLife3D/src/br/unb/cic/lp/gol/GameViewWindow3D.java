@@ -102,7 +102,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 			for(i = 0; i < engine.getHeight(); i++){
 				for(j = 0; j < engine.getWidth(); j++){
 					alpha = (float) 0.8f - (((k + i + j) * 0.8f) / ((float) engine.getDepth() - 1 + (float) engine.getHeight() - 1 + (float) engine.getWidth() - 1));
-					JLabel picLabel = new JLabel(new AlphaImageIcon(new ImageIcon(getClass().getResource("cell_3d_grid.png")), alpha));
+					JLabel picLabel = new JLabel(new AlphaImageIcon(new ImageIcon(getClass().getResource("cell_3_grid.png")), alpha));
 					picLabel.setBounds(pontaPrimeiroX + (24*j) - (24*k), pontaPrimeiroY - (14*j) + (27*i) - (14*k), 50, 57);
 					panel.add(picLabel);
 				}
