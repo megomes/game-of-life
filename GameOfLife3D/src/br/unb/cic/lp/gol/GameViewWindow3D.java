@@ -26,7 +26,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 	private GameController controller;
 	private GameRule gameRule;
 	
-	private List<CellState> options;
+	private List<CellState_Alive> options;
 	
 	private JPanel panel;
 	
@@ -47,14 +47,15 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 	}
 	
 	private void configWindow(){
-		this.setSize(width,height + 20 + 50); //Tamanho da janela
+		options = gameRule.getOptions();
+
+		this.setSize(width,height + 20 + 50 + (options.size()*10)); //Tamanho da janela
 		this.setLocationRelativeTo(null); //Posicionado no centro
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		actualX = -1;
 		actualY = -1;
 		actualZ = -1;
 		
-		options = gameRule.getOptions();
 		
 		panel = new JPanel();
 	    getContentPane().add(panel);
@@ -100,73 +101,64 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 		/* Botoes de Escolha de CŽlula */
 		lblx = new JLabel("X:");
 		lblx.setForeground(Color.WHITE);
-		lblx.setBounds(BORDER - 15, height - BORDER - 10, 25, 20);
+		lblx.setBounds(BORDER - 15, height - BORDER + 10, 25, 20);
 		panel.add(lblx);
 		for (int j = 0; j < engine.getWidth(); j++){
 			buttons[0][j] = new MButton(0,j);
 			buttons[0][j].setText(" " + (j) + " ");
 			buttons[0][j].addActionListener(this);
-			buttons[0][j].setBounds(BORDER + (j * 21), height - BORDER - 10 + (0*20), 20, 20);
+			buttons[0][j].setBounds(BORDER + (j * 21), height - BORDER + 10 + (0*20), 20, 20);
 			panel.add(buttons[0][j]);
 		}
 		lbly = new JLabel("Y:");
 		lbly.setForeground(Color.WHITE);
-		lbly.setBounds(BORDER - 15, height - BORDER + 10, 25, 20);
+		lbly.setBounds(BORDER - 15, height - BORDER + 30, 25, 20);
 		panel.add(lbly);
 		for (int j = 0; j < engine.getHeight(); j++){
 			buttons[1][j] = new MButton(1,j);
 			buttons[1][j].setText(" " + (j) + " ");
 			buttons[1][j].addActionListener(this);
-			buttons[1][j].setBounds(BORDER + (j * 21), height - BORDER - 10 + (1*20), 20, 20);
+			buttons[1][j].setBounds(BORDER + (j * 21), height - BORDER + 10 + (1*20), 20, 20);
 			panel.add(buttons[1][j]);
 		}
 		lblz = new JLabel("Z:");
 		lblz.setForeground(Color.WHITE);
-		lblz.setBounds(BORDER - 15, height - BORDER + 30, 25, 20);
+		lblz.setBounds(BORDER - 15, height - BORDER + 50, 25, 20);
 		panel.add(lblz);
 		for (int j = 0; j < engine.getDepth(); j++){
 			buttons[2][j] = new MButton(2,j);
 			buttons[2][j].setText(" " + (j) + " ");
 			buttons[2][j].addActionListener(this);
-			buttons[2][j].setBounds(BORDER + (j * 21), height - BORDER - 10 + (2*20), 20, 20);
+			buttons[2][j].setBounds(BORDER + (j * 21), height - BORDER + 10 + (2*20), 20, 20);
 			panel.add(buttons[2][j]);
 		}
 		
 		/* Print Options */
-		if(options != null){
-			JButton colorButton = new JButton(options.get(0).getCellStateColorName());
-			colorButton.setBounds(BORDER + 240, height - BORDER + 10, 100, 20);
-			colorButton.addActionListener(new ActionListener() {
-		           @Override
-		           public void actionPerformed(ActionEvent event) {
-		               if (actualX >= 0 && actualY >= 0 && actualZ >= 0){
-		            	   	controller.changeCell(actualY, actualX, actualZ, new CellState_Alive(), true);
-		   					actualX = -1;
-		   					actualY = -1;
-		   					actualZ = -1;
-		               }
-		          }
-		     });
-			panel.add(colorButton);
-			
-			colorButton = new JButton(options.get(1).getCellStateColorName());
-			colorButton.setBounds(BORDER + 240, height - BORDER + 30, 100, 20);
-			colorButton.addActionListener(new ActionListener() {
-		           @Override
-		           public void actionPerformed(ActionEvent event) {
-		               if (actualX >= 0 && actualY >= 0 && actualZ >= 0){
-		            	   	controller.changeCell(actualY, actualX, actualZ, new CellState_Alive_B(), true);
-		   					actualX = -1;
-		   					actualY = -1;
-		   					actualZ = -1;
-		               }
-		          }
-		     });
-			panel.add(colorButton);
+		if(options.size() > 1){
+			for(int i = 0; i < options.size(); i++){
+				CellState_Alive state = options.get(i);
+				JButton colorButton = new JButton(state.getCellStateColorName());
+				colorButton.setBounds(BORDER + 240, height - BORDER + 10 + (i*20), 100, 20);
+				colorButton.setName(state.getCellStateName());
+				colorButton.putClientProperty("id", i);
+				colorButton.addActionListener(new ActionListener() {
+			           @Override
+			           public void actionPerformed(ActionEvent event) {
+			               if (actualX >= 0 && actualY >= 0 && actualZ >= 0){
+			            	    JButton button = (JButton) event.getSource();
+			            	    int id = (Integer) button.getClientProperty("id");
+			            	   	controller.changeCell(actualY, actualX, actualZ, options.get(id), true);
+			   					actualX = -1;
+			   					actualY = -1;
+			   					actualZ = -1;
+			               }
+			          }
+			     });
+				panel.add(colorButton);
+			}
 		}
 		
 	}
-	
 	private void printCells(){
 		int pontaPrimeiroX = width/2 - 25;
 		int pontaPrimeiroY = height/2 - 28;
@@ -200,8 +192,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 	        	       int y = random.nextInt(engine.getHeight());
 	        	       int z = random.nextInt(engine.getDepth());
 	        	       CellState state = null;
-	        	       if(options == null){
-	        	    	   state = new CellState_Alive();
+	        	       if(options.size() == 1){
+	        	    	   state = options.get(0);
 	        	       }else{
 	        	    	   int state_i = random.nextInt(options.size());
 	        	    	   state = options.get(state_i);
@@ -211,7 +203,7 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 	        	   controller.reloadViews();
 	          }
 	     });
-		button.setBounds(width - BORDER - 150, height - BORDER - 10, 150, 20);
+		button.setBounds(width - BORDER - 150, height - BORDER + 50, 150, 20);
 		panel.add(button);
 		return button;
 	}
@@ -266,8 +258,8 @@ public class GameViewWindow3D extends GameWindow implements ActionListener{
 			for(int i = 0; i < contador; i++){
 				buttons[button.getI()][i].setEnabled(false);
 			}
-			if(actualX >= 0 && actualY >= 0 && actualZ >= 0 && options == null){
-				controller.changeCell(actualY, actualX, actualZ, new CellState_Alive(), true);
+			if(actualX >= 0 && actualY >= 0 && actualZ >= 0 && options.size() == 1){
+				controller.changeCell(actualY, actualX, actualZ, options.get(0), true);
 				actualX = -1;
 				actualY = -1;
 				actualZ = -1;

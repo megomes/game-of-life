@@ -31,7 +31,7 @@ public class GameRule_ImigrationGame extends GameRule {
 		}
 		if(Alive_B_count + Alive_A_count == 2 || Alive_B_count + Alive_A_count == 3){
 			if (Alive_A_count >= Alive_B_count){
-				return new CellState_Alive();
+				return new CellState_Alive_A();
 			}else{
 				return new CellState_Alive_B();
 			}
@@ -52,7 +52,7 @@ public class GameRule_ImigrationGame extends GameRule {
 		}
 		if(Alive_B_count + Alive_A_count == 3){
 			if (Alive_A_count >= Alive_B_count){
-				return new CellState_Alive();
+				return new CellState_Alive_A();
 			}else{
 				return new CellState_Alive_B();
 			}
@@ -60,9 +60,9 @@ public class GameRule_ImigrationGame extends GameRule {
 		return new CellState_Dead();
 	}
 
-	public List<CellState> getOptions() {
-		List<CellState> options = new ArrayList<CellState>();
-		options.add(new CellState_Alive());
+	public List<CellState_Alive> getOptions() {
+		List<CellState_Alive> options = new ArrayList<CellState_Alive>();
+		options.add(new CellState_Alive_A());
 		options.add(new CellState_Alive_B());
 
 		return options;
@@ -70,7 +70,7 @@ public class GameRule_ImigrationGame extends GameRule {
 	public HashMap<String,String> getImageOptions(){
 		HashMap<String, String> list = new HashMap<String,String>();
 		list.put(new CellState_Dead().getCellStateName(), new CellState_Dead().getCellImageName());
-		list.put(new CellState_Alive().getCellStateName(), new CellState_Alive().getCellImageName());
+		list.put(new CellState_Alive_A().getCellStateName(), new CellState_Alive_A().getCellImageName());
 		list.put(new CellState_Alive_B().getCellStateName(), new CellState_Alive_B().getCellImageName());
 
 		return list;

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -72,6 +73,8 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		}
 		addNextButton(panel);
 		btnUndo = addUndoButton(panel);
+		addRandomButton(panel);
+		if(engine.getWidth() == 17 && engine.getHeight() == 17) addShowOffButton(panel);
 		
 		setVisible(true);
 	}
@@ -87,7 +90,119 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		panel.add(button);
 		return button;
 	}
-	
+	public JButton addRandomButton(JPanel panel){
+		JButton button = new JButton("Random");
+		button.addActionListener(new ActionListener() {
+	           @Override
+	           public void actionPerformed(ActionEvent event) {
+	        	   int total = engine.getHeight() * engine.getWidth();
+	        	   //Gerar 5% do total
+	        	   int gerar = (int) (total * 25.0) / 100;
+	        	   System.out.println("total: " + total + " , " + gerar );
+	        	   for(int i = 0; i < gerar; i++){
+	        		   Random random = new Random();
+	        	       int x = random.nextInt(engine.getWidth());
+	        	       int y = random.nextInt(engine.getHeight());
+	        	       CellState state = null;
+	        	       List<CellState_Alive> options = gameRule.getOptions();
+	        	       if(options.size() == 1){
+	        	    	   state = options.get(0);
+	        	       }else{
+	        	    	   int state_i = random.nextInt(options.size());
+	        	    	   state = options.get(state_i);
+	        	       }
+	        	       controller.changeCell(y, x, 0, state, false);
+	        	   }
+	        	   controller.reloadViews();
+	          }
+	     });
+		button.setBounds(width - BORDER - 150 - 160 - 160, height - BORDER + 10, 150, 20);
+		panel.add(button);
+		return button;
+	}
+	public JButton addShowOffButton(JPanel panel){
+		JButton button = new JButton("Show Off");
+		button.addActionListener(new ActionListener() {
+	           @Override
+	           public void actionPerformed(ActionEvent event) {
+	        	   int[][] padrao = {{0,0,0,0,0,0,0,0}, 
+	        			   			 {0,0,0,0,0,0,0,0}, 
+	        			   			 {0,0,0,0,1,1,1,0}, 
+	        			   			 {0,0,0,0,0,0,0,0},
+	        			   			 {0,0,1,0,0,0,0,1},
+	        			   			 {0,0,1,0,0,0,0,1},
+	        			   			 {0,0,1,0,0,0,0,1},
+	        			   			 {0,0,0,0,1,1,1,0}};
+	        	   
+        	       List<CellState_Alive> options = gameRule.getOptions();
+        	       CellState_Alive state;
+        		   Random random = new Random();
+	        	   if(options.size() == 1){
+        	    	   state = options.get(0);
+        	       }else{
+        	    	   int state_i = random.nextInt(options.size());
+        	    	   state = options.get(state_i);
+        	       }
+	        	   
+        		   for(int i = 0; i < 8; i++){
+        			   for(int j = 0; j < 8; j++){
+        				   if(padrao[i][j] == 1){
+        					   if(options.size() == 1){
+        	        	    	   state = options.get(0);
+        	        	       }else{
+        	        	    	   int state_i = random.nextInt(options.size());
+        	        	    	   state = options.get(state_i);
+        	        	       }
+        					   controller.changeCell(i, j, 0, state, false);
+        				   }
+        			   }
+        		   }
+        		   for(int i = 0; i < 8; i++){
+        			   for(int j = 0; j < 8; j++){
+        				   if(padrao[i][j] == 1){
+        					   if(options.size() == 1){
+        	        	    	   state = options.get(0);
+        	        	       }else{
+        	        	    	   int state_i = random.nextInt(options.size());
+        	        	    	   state = options.get(state_i);
+        	        	       }
+        					   controller.changeCell(16 - i, j, 0, state, false);
+        				   }
+        			   }
+        		   }
+        		   for(int i = 0; i < 8; i++){
+        			   for(int j = 0; j < 8; j++){
+        				   if(padrao[i][j] == 1){
+        					   if(options.size() == 1){
+        	        	    	   state = options.get(0);
+        	        	       }else{
+        	        	    	   int state_i = random.nextInt(options.size());
+        	        	    	   state = options.get(state_i);
+        	        	       }
+        					   controller.changeCell(16 - i, 16 - j, 0, state, false);
+        				   }
+        			   }
+        		   }
+        		   for(int i = 0; i < 8; i++){
+        			   for(int j = 0; j < 8; j++){
+        				   if(padrao[i][j] == 1){
+        					   if(options.size() == 1){
+        	        	    	   state = options.get(0);
+        	        	       }else{
+        	        	    	   int state_i = random.nextInt(options.size());
+        	        	    	   state = options.get(state_i);
+        	        	       }
+        					   controller.changeCell(i, 16 - j, 0, state, false);
+        				   }
+        			   }
+        		   }
+	        	   controller.reloadViews();
+	          }
+	     });
+		button.setBounds(width - BORDER - 150 - 160 - 160, height - BORDER + 35, 150, 20);
+		panel.add(button);
+		return button;
+	}
 	public JButton addUndoButton(JPanel panel){
 		JButton button = new JButton("Undo changes");
 		button.addActionListener(new ActionListener() {
@@ -118,7 +233,6 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 
 		for(int i = 0; i < engine.getHeight(); i++){
 			for(int j = 0; j < engine.getWidth(); j++){
-				
 				buttons[i][j].setBackgroundImage(getLoadedImage(engine.getCellState(i, j, 0).getCellStateName()));
 
 			}
@@ -132,12 +246,12 @@ public class GameViewWindow extends GameWindow implements ActionListener{
 		if(e.getSource() instanceof MButton){
 			MButton button = (MButton) e.getSource();
 			CellState state = engine.getCellState(button.getI(), button.getJ(), 0);
-			List<CellState> options = gameRule.getOptions();
-			if(options == null){
-				if (state instanceof CellState_Alive){
+			List<CellState_Alive> options = gameRule.getOptions();
+			if(options.size() == 1){
+				if (state instanceof CellState_Alive_A){
 					controller.changeCell(button.getI(), button.getJ(), 0, new CellState_Dead(), true);
 				}else{
-					controller.changeCell(button.getI(), button.getJ(), 0, new CellState_Alive(), true);
+					controller.changeCell(button.getI(), button.getJ(), 0, options.get(0), true);
 				}
 			}else{
 				if (state instanceof CellState_Dead){

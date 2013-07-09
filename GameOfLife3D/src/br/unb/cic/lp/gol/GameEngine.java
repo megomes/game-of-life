@@ -127,16 +127,16 @@ public class GameEngine{
 	public void changeCell(int i, int j, int k, CellState state){
 		if(i < width && j < height && k < depth){
 			cells[k][i][j].setState(state);
+			caretaker.saveState(cells);
 		}else{
 			throw new InvalidParameterException("Invalid position (" + i + ", " + j + ")");
 		}
-		caretaker.saveState(cells);
 	}
 	
 	/*
 	 * Retorna o estado da celula (i,j)
 	 */
-	CellState getCellState(int i, int j, int k){
+	public CellState getCellState(int i, int j, int k){
 		return cells[k][i][j].getState();
 	}
 	

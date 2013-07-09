@@ -18,6 +18,6 @@ public abstract class GameRule {
 	protected abstract CellState shouldKeepAlive(HashMap<CellState, Integer> dictState, int depth);
 	protected abstract CellState shouldRevive(HashMap<CellState, Integer> dictState, int depth);
 	
-	public abstract List<CellState> getOptions();
+	public abstract List<CellState_Alive> getOptions();
 	public abstract HashMap<String, String> getImageOptions();
 }

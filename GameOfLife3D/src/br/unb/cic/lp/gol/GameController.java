@@ -70,8 +70,6 @@ public class GameController {
 		}else{
 			board.update(true);
 		}
-
-		
 	}
 	
 }

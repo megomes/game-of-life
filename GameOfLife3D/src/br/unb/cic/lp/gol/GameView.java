@@ -105,8 +105,8 @@ public class GameView {
 			}
 		}while(!validPosition(i,j,k));
 		// Se existir mais de um modelo de célula viva
-		List<CellState> options = rule.getOptions();
-		if(options != null){
+		List<CellState_Alive> options = rule.getOptions();
+		if(options.size() > 0){
 			do {
 				contador = 0;
 				System.out.print("\n Inform the cell state {");
@@ -119,7 +119,7 @@ public class GameView {
 			}while(option <= 0 || option > contador);
 			state = options.get(option - 1);
 		}else{
-			state = new CellState_Alive();
+			state = options.get(0);
 		}
 		
 		controller.changeCell(i, j, k, state, true);

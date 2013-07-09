@@ -1,7 +1,7 @@
 package br.unb.cic.lp.gol;
 
 import br.unb.cic.lp.rules.*;
-import br.unb.cic.lp.states.CellState_Alive;
+import br.unb.cic.lp.states.CellState_Alive_A;
 
 /**
  * Classe Game implementa o Padrão Façade, tornando a criação
@@ -20,12 +20,8 @@ public class Game {
 	 * 
 	 * TODO: Colocar a regra do jogo como parâmetro tbm.
 	 */
-	public Game(int height, int width, int depth){
+	public Game(int height, int width, int depth, GameRule gameRule){
 		controller = new GameController();
-		
-		//GameRule gameRule = new GameRule_Standard(); //Jogo com as regras Padrões
-		//GameRule gameRule = new GameRule_HighLife(); //Jogo com as regras do HighLife
-		GameRule gameRule = new GameRule_ImigrationGame();
 		
 		GameEngine engine = new GameEngine(height, width, depth, gameRule);	
 		
@@ -42,6 +38,9 @@ public class Game {
 		}
 		
 		controller.setGameWindow(window);
+	}
+	public Game(int height, int width, GameRule gameRule){
+		this(height, width, 1, gameRule);
 	}
 	
 	/* Inicia todo o processo do jogo */

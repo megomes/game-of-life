@@ -25,7 +25,7 @@ public class GameRule_HighLife extends GameRule{
 		for(CellState cell : dictState.keySet()){
 			if (cell.getCellStateName() == "alive_a"){
 				if (dictState.get(cell) == 2 || dictState.get(cell) == 3){
-					return new CellState_Alive();
+					return new CellState_Alive_A();
 				}
 				break;
 			}
@@ -36,7 +36,7 @@ public class GameRule_HighLife extends GameRule{
 		for(CellState cell : dictState.keySet()){
 			if (cell.getCellStateName() == "alive_a"){
 				if (dictState.get(cell) == 3 || dictState.get(cell) == 6){
-					return new CellState_Alive();
+					return new CellState_Alive_A();
 				}
 				break;
 			}
@@ -47,13 +47,15 @@ public class GameRule_HighLife extends GameRule{
 	 * Retorna um HashMap contendo o ID da opção e a opção de VIDA existente na Regra.
 	 * Como a regra HighLife apenas contem um modo de VIDA, retornamos NULL 
 	 */
-	public List<CellState> getOptions(){
-		return null;
+	public List<CellState_Alive> getOptions(){
+		List<CellState_Alive> states = new ArrayList<CellState_Alive>();
+		states.add(new CellState_Alive_A());
+		return states;
 	}
 	public HashMap<String,String> getImageOptions(){
 		HashMap<String, String> list = new HashMap<String,String>();
 		list.put(new CellState_Dead().getCellStateName(), new CellState_Dead().getCellImageName());
-		list.put(new CellState_Alive().getCellStateName(), new CellState_Alive().getCellImageName());
+		list.put(new CellState_Alive_A().getCellStateName(), new CellState_Alive_A().getCellImageName());
 		
 		return list;
 
