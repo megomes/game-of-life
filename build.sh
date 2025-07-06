@@ -68,6 +68,8 @@ compile_2d() {
         GameOfLife/src/br/unb/cic/lp/savedStates/*.java
     
     if [ $? -eq 0 ]; then
+        # Copy image resources
+        cp GameOfLife/src/br/unb/cic/lp/gol/*.png GameOfLife/bin/br/unb/cic/lp/gol/ 2>/dev/null || true
         print_success "2D version compiled successfully!"
     else
         print_error "Failed to compile 2D version"
@@ -90,6 +92,8 @@ compile_3d() {
         GameOfLife3D/src/br/unb/cic/lp/savedStates/*.java
     
     if [ $? -eq 0 ]; then
+        # Copy image resources
+        cp GameOfLife3D/src/br/unb/cic/lp/gol/*.png GameOfLife3D/bin/br/unb/cic/lp/gol/ 2>/dev/null || true
         print_success "3D version compiled successfully!"
     else
         print_error "Failed to compile 3D version"

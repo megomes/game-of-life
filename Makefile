@@ -46,12 +46,16 @@ $(BIN_3D):
 compile-2d: $(BIN_2D)
 	@echo "Compiling 2D Game of Life..."
 	$(JAVAC) -encoding ISO-8859-1 -d $(BIN_2D) -cp $(SRC_2D) $(PACKAGES_2D)
+	@echo "Copying image resources..."
+	cp $(SRC_2D)/br/unb/cic/lp/gol/*.png $(BIN_2D)/br/unb/cic/lp/gol/ 2>/dev/null || true
 	@echo "2D version compiled successfully!"
 
 # Compile 3D version
 compile-3d: $(BIN_3D)
 	@echo "Compiling 3D Game of Life..."
 	$(JAVAC) -encoding ISO-8859-1 -d $(BIN_3D) -cp $(SRC_3D) $(PACKAGES_3D)
+	@echo "Copying image resources..."
+	cp $(SRC_3D)/br/unb/cic/lp/gol/*.png $(BIN_3D)/br/unb/cic/lp/gol/ 2>/dev/null || true
 	@echo "3D version compiled successfully!"
 
 # Run 2D version

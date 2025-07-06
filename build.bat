@@ -75,6 +75,8 @@ REM Compile all Java files
     GameOfLife\src\br\unb\cic\lp\savedStates\*.java
 
 if %errorlevel% equ 0 (
+    REM Copy image resources
+    copy GameOfLife\src\br\unb\cic\lp\gol\*.png GameOfLife\bin\br\unb\cic\lp\gol\ >nul 2>&1
     call :print_success "2D version compiled successfully!"
 ) else (
     call :print_error "Failed to compile 2D version"
@@ -97,6 +99,8 @@ REM Compile all Java files
     GameOfLife3D\src\br\unb\cic\lp\savedStates\*.java
 
 if %errorlevel% equ 0 (
+    REM Copy image resources
+    copy GameOfLife3D\src\br\unb\cic\lp\gol\*.png GameOfLife3D\bin\br\unb\cic\lp\gol\ >nul 2>&1
     call :print_success "3D version compiled successfully!"
 ) else (
     call :print_error "Failed to compile 3D version"
