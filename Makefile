@@ -45,13 +45,13 @@ $(BIN_3D):
 # Compile 2D version
 compile-2d: $(BIN_2D)
 	@echo "Compiling 2D Game of Life..."
-	$(JAVAC) -d $(BIN_2D) -cp $(SRC_2D) $(PACKAGES_2D)
+	$(JAVAC) -encoding ISO-8859-1 -d $(BIN_2D) -cp $(SRC_2D) $(PACKAGES_2D)
 	@echo "2D version compiled successfully!"
 
 # Compile 3D version
 compile-3d: $(BIN_3D)
 	@echo "Compiling 3D Game of Life..."
-	$(JAVAC) -d $(BIN_3D) -cp $(SRC_3D) $(PACKAGES_3D)
+	$(JAVAC) -encoding ISO-8859-1 -d $(BIN_3D) -cp $(SRC_3D) $(PACKAGES_3D)
 	@echo "3D version compiled successfully!"
 
 # Run 2D version

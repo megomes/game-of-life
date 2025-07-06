@@ -68,7 +68,7 @@ REM Create bin directory if it doesn't exist
 if not exist "GameOfLife\bin" mkdir "GameOfLife\bin"
 
 REM Compile all Java files
-%JAVAC_CMD% -d GameOfLife\bin -cp GameOfLife\src ^
+%JAVAC_CMD% -encoding ISO-8859-1 -d GameOfLife\bin -cp GameOfLife\src ^
     GameOfLife\src\br\unb\cic\lp\gol\*.java ^
     GameOfLife\src\br\unb\cic\lp\rules\*.java ^
     GameOfLife\src\br\unb\cic\lp\states\*.java ^
@@ -90,7 +90,7 @@ REM Create bin directory if it doesn't exist
 if not exist "GameOfLife3D\bin" mkdir "GameOfLife3D\bin"
 
 REM Compile all Java files
-%JAVAC_CMD% -d GameOfLife3D\bin -cp GameOfLife3D\src ^
+%JAVAC_CMD% -encoding ISO-8859-1 -d GameOfLife3D\bin -cp GameOfLife3D\src ^
     GameOfLife3D\src\br\unb\cic\lp\gol\*.java ^
     GameOfLife3D\src\br\unb\cic\lp\rules\*.java ^
     GameOfLife3D\src\br\unb\cic\lp\states\*.java ^
