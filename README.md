@@ -8,7 +8,7 @@
 
 A comprehensive Java implementation of Conway's Game of Life with both 2D and 3D versions, featuring multiple game rules, GUI interface, and interactive gameplay.
 
-![](img/gol_2d.gif) ![](img/gol_3d.gif)
+![](img/gol_2d_sm.gif) ![](img/gol_3d_sm.gif)
 
 
 ## 🎮 Features
